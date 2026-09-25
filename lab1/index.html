@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твои дела — Менеджер задач</title>
+    <link rel="stylesheet" href="/src/styles/style.css">
+</head>
+<body>
+    <script type="module" src="/src/index.ts" defer></script>
+
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Твои дела</h1>
+            <p class="subtitle">Организуй свой день эффективно</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Блок создания / Редактирования задачи (Сворачиваемая форма) -->
+            <section class="task-form-section" id="task-form-container">
+                <div class="form-header" id="form-toggle-btn" title="Свернуть / Развернуть форму">
+                    <h2 id="form-title">Новая задача</h2>
+                    <span class="toggle-arrow"></span>
+                </div>
+                
+                <div class="form-body-wrapper">
+                    <form id="task-form" autocomplete="off">
+                        <div class="form-group">
+                            <label for="task-title">Название задачи</label>
+                            <input type="text" id="task-title" placeholder="Что нужно сделать?" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-priority">Приоритет</label>
+                                <select id="task-priority">
+                                    <option value="low">Низкий</option>
+                                    <option value="medium" selected>Средний</option>
+                                    <option value="high">Высокий</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="task-desc">Описание</label>
+                            <textarea id="task-desc" rows="3" placeholder="Добавьте детали или подзадачи..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="btn-cancel">Отмена</button>
+                            <button type="submit" class="btn btn-primary" id="btn-submit">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Скрипт для небольшой интерактивности -->
+            <script>
+                // логика сворачивания формы
+                document.getElementById('form-toggle-btn').addEventListener('click', () => {
+                    document.getElementById('task-form-container').classList.toggle('collapsed');
+                });
+                // Автоматическая высота для Textarea (Описание задачи)
+                const tx = document.getElementById('task-desc')
+                tx.addEventListener('input', () => {
+                    tx.style.height = 'auto'
+                    tx.style.height = tx.scrollHeight + 'px'
+                })
+            </script>
+
+            <!-- Блок фильтрации, поиска и сортировки -->
+            <section class="toolbar-section">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Поиск по названию или описанию...">
+                </div>
+
+                <div class="filter-controls">
+                    <div class="control-group">
+                        <label for="filter-status">Статус:</label>
+                        <select id="filter-status">
+                            <option value="all">Все задачи</option>
+                            <option value="active">Активные</option>
+                            <option value="completed">Выполненные</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="sort-select">Сортировка:</label>
+                        <select id="sort-select">
+                            <option value="dateDesc">Сначала новые</option>
+                            <option value="dateAsc">Сначала старые</option>
+                            <option value="priorityDesc">Приоритет: высокий</option>
+                            <option value="priorityAsc">Приоритет: низкий</option>
+                            <option value="title">По алфавиту</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Сетка с карточками задач -->
+            <section class="tasks-container">
+                <template id="task-card-template"> 
+                    <!-- добавить класс priority-high/priority-medium/priority-low и is-completed если выполнена -->
+                    <article class="task-card">
+                        <div class="task-card-header">
+                            <!-- Высокий/Средний/Низкий -->
+                            <span class="badge"></span>
+                            <!-- Вставить заголовок -->
+                            <h3 class="task-card-title"></h3>
+                        </div>
+                        <!-- Описание -->
+                        <p class="task-card-desc"></p>
+                        <div class="task-card-dates">
+                            <!-- Заполнить время создания -->
+                            <span class="date-created">Создано: </span>
+                            <!-- Заполнить время завершения или удалить -->
+                            <span class="date-completed">Завершено: </span>
+                        </div>
+                        <div class="task-card-actions">
+                            <button class="btn-icon btn-complete">Завершить</button>
+                            <div class="task-card-edit-group">
+                                <button class="btn-icon btn-edit">Изменить</button>
+                                <button class="btn-icon btn-delete">Удалить</button>
+                            </div>
+                        </div>
+                    </article>
+                </template>
+                <div class="tasks-grid" id="tasks-list">
+                    <!-- тут отображать задачи -->
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
