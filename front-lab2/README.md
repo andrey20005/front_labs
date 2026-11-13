@@ -1,29 +1,74 @@
 # front-lab2
 
-This template should help get you started developing with Vue 3 in Vite.
+# Задание 
+Использовать можно любой Front-End фреймворк
 
-## Recommended IDE Setup
+Разработайте клиентское приложение «Каталог товаров», которое получает данные через HTTP API и предоставляет пользователю возможности поиска, фильтрации, сортировки, просмотра, добавления, редактирования и удаления товаров.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+> API запускается локально на компьютере студента из файла api/db.json. Файл создаете самостоятельно, пример содержимого файла в Инструкции к заданию. Разработка API студентом не оценивается; оценивается разработка клиентского приложения, которое корректно взаимодействует с этим API.
 
-## Recommended Browser Setup
+Для лабораторной работы можно использовать локальный json-server
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Приложение должно иметь компонентную структуру, маршрутизацию, типизированные модели данных, обработку состояний загрузки и ошибок, формы с валидацией, автоматические тесты и доступный интерфейс.
 
-## Type Support for `.vue` Imports in TS
+Основной пользовательский сценарий: 
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+    Открыть каталог
+          ↓
+    Загрузить товары
+          ↓
+    Найти или отфильтровать товар
+          ↓
+    Открыть подробную страницу
+          ↓
+    Добавить в избранное
+          ↓
+    Создать или изменить товар
+          ↓
+    Получить результат или сообщение об ошибке
 
-## Customize configuration
+# О проекте
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Предметная область - магазин кухонной техники
+Тут можно найти: чайники, микроволновки, тостеры
 
-## Project Setup
+## Страницы
+#### Главная страница
+Общая информация о каталоге товаров \
+Рекомендации категории товаров, ведет в каталог с конкретными фильтрами
+
+#### Каталог
+фильтры, поиск \
+список товаров, карточки - цена, кнопка добавить в корзину, фото товара, название товара, рейтинг товара
+
+#### Страница товара
+информация о товаре, отзывы \
+добавить в корзину \
+написать отзыв
+
+#### Карзина
+карточки выбранных товаров \ 
+цена за товары \ 
+кнопка купить(ничего не делает)
+
+
+## Логика приложения
+
+никакой авторизации не будет, просто один test_user 
+
+### Сервер
+Это тонкий сервер, в данном случае имитируется просто с помощью json сервера
+предоставляет список товаров, поддерживает фильтры и поиск
+предоставляет подробную информацию о отдельных товарах
+для каждого товара предоставляет список отзывов, оценка и опционально текст
+покупка пока просто ничего не делает
+
+### Клиентская логика 
+Отвечает за работу с корзиной, чисто локально
+
+# Про рботу с проектом
+
+### Project Setup
 
 ```sh
 npm install

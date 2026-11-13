@@ -1,85 +1,52 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, watch } from 'vue'
+import { RouterView, useRoute, useRouter } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+
+const searchQuery = ref('')
+
+watch(
+  () => route.query.q,
+  (newQ) => {
+    searchQuery.value = (newQ as string) || ''
+  },
+  { immediate: true }
+)
+
+function handleSearch() {
+  if (!searchQuery.value.trim()) return
+
+  if (route.path === '/catalog') {
+    const newQuery = { ...route.query, q: searchQuery.value.trim() }
+    router.push({ query: newQuery })
+  } else {
+    router.push({ path: '/catalog', query: { q: searchQuery.value.trim() } })
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <n-message-provider>
+    <header class="sticky top-0 z-50 bg-white rounded-b-lg shadow-sm max-w-[1000px] mx-auto">
+      <div class="px-6 py-3 flex flex-wrap justify-center items-center gap-4">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <div class="flex-1 min-w-[200px]">
+          <n-input v-model:value="searchQuery" @keyup.enter="handleSearch" placeholder="Поиск товаров..." />
+        </div>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+        <nav class="flex gap-2">
+          <n-button @click="router.push('/')" strong>Главная</n-button>
+          <n-button @click="router.push('/catalog')" strong>Каталог</n-button>
+          <n-button @click="router.push('/cart')" strong>Корзина</n-button>
+        </nav>
+
+      </div>
+    </header>
+
+    <div class="mx-auto px-4 py-8 max-w-[1640px]">
+      <RouterView />
     </div>
-  </header>
-
-  <RouterView />
+  </n-message-provider>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>

@@ -1,35 +1,66 @@
-@import './base.css';
+@import "tailwindcss";
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+:root {
+  --clr-terracotta: #A26248;
+  --clr-terracotta-dark: #7A4630;
+  --clr-terracotta-light: #C08267;
+  --clr-terracotta-alpha: rgba(162, 98, 72, 0.15);
+  
+  --clr-ocean: #4992A3;
+  --clr-ocean-dark: #346D7B;
+  --clr-ocean-light: #6BB0C1;
+  --clr-ocean-alpha: rgba(73, 146, 163, 0.15);
+  
+  --clr-sage: #49A379;
+  --clr-sage-dark: #357B5A;
+  --clr-sage-light: #6BC097;
+  --clr-sage-alpha: rgba(73, 163, 121, 0.15);
+  
+  --clr-almond: #DEC8BB;
+  --clr-almond-dark: #C6AA9B;
+  --clr-almond-light: #EFE4DE;
+  --clr-almond-lightest: #F7F1EE;
+  
+  --clr-ice-blue: #CAEBF0;
+  --clr-ice-blue-dark: #A5D2DB;
+  --clr-ice-blue-light: #E7F6F8;
+  --clr-ice-blue-lightest: #F3FAFB;
+
+  --clr-white: #FFFFFF;
+  --clr-gray-100: #F1F5F9;
+  --clr-gray-200: #E2E8F0;
+  --clr-gray-700: #334155;
+  --clr-gray-900: #0F172A;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
+:root {
+  /* Фоны */
+  --bg-main:          var(--clr-almond-lightest);
+  --bg-card:          var(--clr-white);
+  --bg-sidebar:       var(--clr-ice-blue-lightest);
+  --bg-accent-soft:   var(--clr-terracotta-alpha);
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
+  /* Текст */
+  --text-main:        var(--clr-gray-900);
+  --text-body:        var(--clr-gray-700);
+  --text-muted:       var(--clr-almond-dark);
+  --text-accent:      var(--clr-terracotta);
+  --text-on-interactive: var(--clr-white);
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+  /* Интерактив */
+  --interactive-primary:        var(--clr-terracotta);
+  --interactive-primary-hover:  var(--clr-terracotta-dark);
+  --interactive-secondary:      var(--clr-ocean);
+  --interactive-secondary-hover:var(--clr-ocean-dark);
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+  /* Границы и фокус */
+  --border-subtle:    var(--clr-almond-light);
+  --border-card:      var(--clr-almond);
+  --border-focus:     var(--clr-ocean);
+
+  /* Статусы */
+  --status-success-bg:   var(--clr-sage-alpha);
+  --status-success-text: var(--clr-sage-dark);
+  --status-info-bg:      var(--clr-ice-blue);
+  --status-info-text:    var(--clr-ocean-dark);
 }
