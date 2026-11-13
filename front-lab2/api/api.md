@@ -1,39 +1,85 @@
-запуск:
-npx json-server --watch api/db.json --port 3000 --static api/public
+# API — json-server 1.0.0-beta.15
 
-Статика 
+Запуск:
+
+```sh
+npx json-server@1.0.0-beta.15 api/db.json --port 3000 --static api/public
+```
+
+Флаг `--watch` больше не нужен: json-server 1+ сам отслеживает изменения файла.
+
+Статика:
+
+```text
 http://localhost:3000/images/Bosch_TWK3A011.png
+```
 
-Запросы:
+## Товары
 
-# Каталог — все товары
+```text
+# Все товары
 GET /products
 
-# Фильтр по категории
+# Поиск по названию (подстрока)
+GET /products?title:contains=bosch
+
+# Фильтр по одной категории
 GET /products?category=kettle
 
-# Полнотекстовый поиск (title, description, brand, …)
-GET /products?q=bosch
+# Несколько категорий
+GET /products?category:in=kettle,toaster
 
-# Комбинация: категория + поиск + диапазон цены
-GET /products?category=kettle&price_gte=2500&price_lte=4000&q=tefal
+# Несколько брендов
+GET /products?brand:in=Bosch,Tefal
+
+# Только товары в наличии
+GET /products?inStock=true
+
+# Диапазон цены
+GET /products?price_gte=2500&price_lte=4000
 
 # Фильтр по рейтингу (для «рекомендаций» на главной)
 GET /products?rating_gte=4.5
 
+# Комбинация: категории + бренды + поиск + цена + рейтинг
+GET /products?category:in=kettle,toaster&brand:in=Bosch,Tefal&title:contains=tefal&price_gte=2000&price_lte=4000&rating_gte=4.2
+
 # Сортировка по цене / рейтингу
-GET /products?_sort=price&_order=asc
-GET /products?_sort=rating&_order=desc
+GET /products?_sort=price
+GET /products?_sort=-price
+GET /products?_sort=-rating
 
-# Пагинация (если захотите)
-GET /products?_page=1&_limit=8
+# Пагинация
+GET /products?_page=1&_per_page=8
+```
 
-# Страница товара — с отзывами через _embed
-GET /products/1?_embed=reviews
+При пагинации ответ приходит объектом:
 
-# Если открыли /product/5 без отзывов, но нужны отдельно:
-GET /reviews?productId=5
+```json
+{
+  "first": 1,
+  "prev": null,
+  "next": 2,
+  "last": 2,
+  "pages": 2,
+  "items": 12,
+  "data": []
+}
+```
 
+## Страница товара
+
+```text
+# Товар
+GET /products/1
+
+# Отзывы товара
+GET /reviews?productId=1
+```
+
+## Добавление отзыва
+
+```text
 POST /reviews
 Content-Type: application/json
 
@@ -44,4 +90,4 @@ Content-Type: application/json
   "text": "Отличный чайник",
   "date": "2026-10-30"
 }
-
+```

@@ -1,3 +1,15 @@
+export type CatalogSort = 'default' | 'price-asc' | 'price-desc' | 'rating-desc'
+
+export type CatalogFilters = {
+  categories: string[],
+  brands: string[],
+  priceGte: number | null,
+  priceLte: number | null,
+  ratingGte: number | null,
+  inStock: boolean,
+  sort: CatalogSort
+}
+
 export type Product = {
   id: number,
   title: string,
